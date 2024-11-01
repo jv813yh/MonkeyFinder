@@ -1,6 +1,11 @@
-﻿namespace MonkeyFinder.ViewModels
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace MonkeyFinder.ViewModels
 {
-    public class MonkeyDetailsViewModel : BaseViewModel
+    [QueryProperty("Monkey", "Monkey")]
+    public partial class MonkeyDetailsViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        private Monkey _monkey;
     }
 }

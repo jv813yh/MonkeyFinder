@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MonkeyFinder.MonkeyAPI;
 using MonkeyFinder.Services.MonkeyServices;
+using MonkeyFinder.Views;
 
 namespace MonkeyFinder
 {
@@ -17,20 +18,22 @@ namespace MonkeyFinder
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Add HttpClient
+            // Register HttpClient
             builder.Services.AddHttpClient<MonkeyHttpClient>(client =>
             {
                 client.BaseAddress = new Uri("https://raw.githubusercontent.com/jamesmontemagno/");
             });
 
-            // Add Services
+            // Register Services
             builder.Services.AddSingleton<IMonkeyService, MonkeyService>();
 
-            // Add ViewModels
+            // Register ViewModels
             builder.Services.AddSingleton<MonkeysViewModel>();
+            builder.Services.AddTransient<MonkeyDetailsViewModel>();
 
-            // Add Pages
+            // Register Pages
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<DetailsPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

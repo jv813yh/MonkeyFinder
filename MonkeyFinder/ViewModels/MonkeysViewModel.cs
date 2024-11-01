@@ -1,10 +1,12 @@
-﻿using MonkeyFinder.Services.MonkeyServices;
+﻿using CommunityToolkit.Mvvm.Input;
+using MonkeyFinder.Services.MonkeyServices;
+using MonkeyFinder.Views;
 using MvvmHelpers.Commands;
 using System.Diagnostics;
 
 namespace MonkeyFinder.ViewModels
 {
-    public class MonkeysViewModel : BaseViewModel
+    public partial class MonkeysViewModel : BaseViewModel
     {
         private readonly IMonkeyService _monkeyService;
 
@@ -12,15 +14,32 @@ namespace MonkeyFinder.ViewModels
         public AsyncCommand GetMonkeysCommand { get; }
         public MonkeysViewModel(IMonkeyService monkeyService)
         {
-            _monkeyService = monkeyService;
 
             Title = "Monkey Finder";
+            _monkeyService = monkeyService;
+
             MonkeysObsCollection = new ObservableCollection<Monkey>();
+            
             GetMonkeysCommand = new AsyncCommand(LoadMonkeysAsync);
 
         }
 
-        async Task LoadMonkeysAsync()
+        [RelayCommand]
+        private async Task GoToDetailsAsync(Monkey currentMonkey)
+        {
+            if(currentMonkey == null)
+            {
+                return;
+            }
+
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}", true,
+                    new Dictionary<string, object>
+                    {
+                        { "Monkey", currentMonkey }
+                    });
+        }
+
+        private async Task LoadMonkeysAsync()
         {
             if (IsBusy)
             {
