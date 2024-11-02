@@ -9,6 +9,11 @@
           ColumnSpacing="2"
           RowDefinitions="*,auto">
 
+        <!--
+            CollectionView to display the list of monkeys
+            with a DataTemplate to display each monkey
+            and a TapGestureRecognizer to navigate to the DetailsPage with the selected monkey
+        -->
         <CollectionView Background="Transparent"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
@@ -49,13 +54,29 @@
             
         </CollectionView>
 
+        <!--
+            Button to get the list of monkeys
+        -->
         <Button Text="Get Monkeys"
                 Grid.Row="1"
                 Command="{Binding GetMonkeysCommand}"
                 IsEnabled="{Binding IsNotBusy}"
                 Margin="10"
                 Style="{StaticResource ButtonOutline}"/>
+        
+        <!--
+            Button to get the closest monkey
+        -->
+        <Button Text="Find Closest Monkey"
+                Grid.Row="1"
+                Grid.Column="1"
+                Command="{Binding GetClosestMonkeyCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Margin="10"
+                Style="{StaticResource ButtonOutline}"/>
 
+        
+        
         <ActivityIndicator IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

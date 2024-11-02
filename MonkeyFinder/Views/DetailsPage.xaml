@@ -14,7 +14,8 @@
                 <BoxView BackgroundColor="{StaticResource Primary}"
                          Grid.ColumnSpan="3"
                          HeightRequest="160"
-                         HorizontalOptions="FillAndExpand"/>
+                         HorizontalOptions="FillAndExpand"
+                         Grid.Row="0"/>
 
                 <Frame Grid.Column="1"
                        Grid.RowSpan="2"
@@ -25,13 +26,15 @@
                        VerticalOptions="Center"
                        IsClippedToBounds="True"
                        Padding="0"
-                       Margin="0,80,0,0">
+                       Margin="0,80,0,0"
+                       Grid.Row="0">
 
                     <Image Aspect="AspectFill"
                            HeightRequest="160"
                            WidthRequest="160"
                            HorizontalOptions="Center"
-                           Source="{Binding Monkey.Image}"/>
+                           Source="{Binding Monkey.Image}"
+                           Grid.Row="0"/>
 
                 </Frame>
 
@@ -39,6 +42,13 @@
 
             <VerticalStackLayout Padding="15"
                                  Spacing="20">
+
+                <Button Text="Show on Map"
+                        Command="{Binding OpenMapCommand}"
+                        HorizontalOptions="Center"
+                        Margin="10"
+                        WidthRequest="200"
+                        Style="{StaticResource ButtonOutline}"/>
 
                 <Label Text="{Binding Monkey.Details}"
                        Style="{StaticResource MediumLabel}"/>

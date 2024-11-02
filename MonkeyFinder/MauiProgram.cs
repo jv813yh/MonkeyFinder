@@ -26,6 +26,9 @@ namespace MonkeyFinder
 
             // Register Services
             builder.Services.AddSingleton<IMonkeyService, MonkeyService>();
+            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+            builder.Services.AddSingleton<IMap>(Map.Default);
 
             // Register ViewModels
             builder.Services.AddSingleton<MonkeysViewModel>();
