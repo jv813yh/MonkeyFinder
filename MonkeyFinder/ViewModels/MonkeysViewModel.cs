@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MonkeyFinder.Services.MonkeyServices;
 using MonkeyFinder.Views;
 using MvvmHelpers.Commands;
@@ -22,6 +23,10 @@ namespace MonkeyFinder.ViewModels
 
         // Command to get the list of monkeys
         public AsyncCommand GetMonkeysCommand { get; }
+
+        // Property for checking if the list is refreshing
+        [ObservableProperty]
+        private bool _isRefreshing;
 
 
         public MonkeysViewModel(IMonkeyService monkeyService, IConnectivity connectivity, IGeolocation geolocation)
@@ -142,7 +147,7 @@ namespace MonkeyFinder.ViewModels
             try
             {
                 // Check if we have network connectivity
-                if(_connectivity.NetworkAccess != NetworkAccess.Internet)
+                if (_connectivity.NetworkAccess != NetworkAccess.Internet)
                 {
                     await Shell.Current.DisplayAlert("Internet issue", "No internet connection available", "Ok");
                     return;
@@ -174,6 +179,7 @@ namespace MonkeyFinder.ViewModels
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
 

@@ -14,45 +14,69 @@
             with a DataTemplate to display each monkey
             and a TapGestureRecognizer to navigate to the DetailsPage with the selected monkey
         -->
-        <CollectionView Background="Transparent"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        ItemsSource="{Binding MonkeysObsCollection}"
-                        SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10">
-                        <Frame HeightRequest="125"
-                               Padding="0"
-                               Style="{StaticResource CardView}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer CommandParameter="{Binding .}"
-                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MonkeysViewModel}}, Path=GoToDetailsCommand}"/>
-                            </Frame.GestureRecognizers>
-                            <Grid ColumnDefinitions="125,*">
-                                
-                                <Image Aspect="AspectFill"
-                                       Source="{Binding Image}"
-                                       HeightRequest="125"
-                                       WidthRequest="125"/>
-
-                                <VerticalStackLayout Grid.Column="1"
-                                                     Padding="10"
-                                                     VerticalOptions="Center">
-                                    <Label Text="{Binding Name}"
-                                           Style="{StaticResource LargeLabel}"/>
-                                    <Label Text="{Binding Location}"
-                                           Style="{StaticResource MediumLabel}"/>
-
-                                </VerticalStackLayout>
-                                
-                            </Grid>
-                        </Frame>
-                    </Grid>
-                </DataTemplate> 
-            </CollectionView.ItemTemplate>
+        <RefreshView Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Command="{Binding GetMonkeysCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
             
-        </CollectionView>
+            <CollectionView Background="Transparent"
+                            ItemsSource="{Binding MonkeysObsCollection}"
+                            SelectionMode="None">
+                
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="200"
+                                 HeightRequest="200">
+                        <Label Text="No monkeys found"
+                                Style="{StaticResource LargeLabel}"/>
+                        <Image Source="nodata.JPG"
+                               Aspect="AspectFill"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="{OnIdiom Desktop=1, Default=3}"
+                                     Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Frame HeightRequest="125"
+                                   Padding="0"
+                                   Style="{StaticResource CardView}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MonkeysViewModel}}, Path=GoToDetailsCommand}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="125,*">
+                                
+                                    <Image Aspect="AspectFill"
+                                           Source="{Binding Image}"
+                                           HeightRequest="125"
+                                           WidthRequest="125"/>
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Padding="10"
+                                                         VerticalOptions="Center">
+                                        <Label Text="{Binding Name}"
+                                               Style="{StaticResource LargeLabel}"/>
+                                        <Label Text="{Binding Location}"
+                                               Style="{StaticResource MediumLabel}"/>
+
+                                    </VerticalStackLayout>
+                                
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate> 
+                </CollectionView.ItemTemplate>
+            
+            </CollectionView>
+        </RefreshView>
 
         <!--
             Button to get the list of monkeys
